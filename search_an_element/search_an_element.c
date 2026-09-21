@@ -1,0 +1,82 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+//blueprint of structure
+struct node{
+    int data;
+    struct node* next;
+};
+
+//creation of each node
+struct node* create(int value){
+    struct node* temp=(struct node*)malloc(sizeof(struct node));
+    temp->data=value;
+    temp->next=NULL;
+    return temp;
+}
+//displaying the content of each node
+void display(struct node* temp){
+    printf("Displaying the contents in each nodes: ");
+    while(temp->next!=NULL){
+        printf("%d -> ",temp->data);
+        temp=temp->next;
+    }
+    printf("%d",temp->data);
+    printf("\n");
+}
+//searching an required element and storing its index
+void search(struct node* temp, int target){
+    struct node* current=temp;
+    int count=0,flag=1;
+    while(current!=NULL){
+        count++;
+        if(current->data==target){
+            flag=1;
+            break;
+        }
+        else{
+            flag=0;
+        }
+        current=current->next;
+    }
+    if(flag==1){
+        printf("The element %d is found at the index %d",target, count);
+    }
+    else{
+        printf("The element is not found!!");
+    }
+}
+//main function
+int main(){
+    int n;
+    printf("Enter Number of nodes to be created: ");
+    scanf("%d",&n);
+    printf("\n");
+    int arr[n];
+    printf("Enter the values at the nodes one by one: \n");
+    for (int i=0;i<n;i++){
+        scanf("%d",&arr[i]);
+        fflush(stdin);
+    }
+    struct node* head=NULL, *temp=NULL;
+    for(int i=0;i<n;i++){
+        struct node* newNode=create(arr[i]);
+        if(head==NULL){
+            head=newNode;
+            temp=head;
+        }
+        else{
+            temp->next=newNode;
+            temp=temp->next;
+        }
+    }
+    temp=head;
+    display(temp);
+    temp=head;
+    int target;
+    printf("Enter the element to be searched: ");
+    scanf("%d",&target);
+    printf("\n");
+    search(temp,target);
+    return 0;
+}
